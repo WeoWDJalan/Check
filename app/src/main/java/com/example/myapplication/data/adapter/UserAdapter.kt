@@ -8,8 +8,8 @@ import coil.transform.CircleCropTransformation
 import com.example.myapplication.data.model.SearchResponse
 import com.example.myapplication.databinding.ItemRowUserBinding
 
-class UserAdapter (private val data:MutableList<SearchResponse.Item> =
-    mutableListOf()) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter (private val data:MutableList<SearchResponse.Item> = mutableListOf(),
+private val listener: (SearchResponse.Item) -> Unit) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     fun setData(data: MutableList<SearchResponse.Item>){
         this.data.clear()
@@ -32,5 +32,8 @@ class UserAdapter (private val data:MutableList<SearchResponse.Item> =
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val item = data[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener {
+            listener(item)
+        }
     }
 }
